@@ -1,12 +1,35 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "cd front-end && npm install",
-  "buildCommand": "cd front-end && npm run build",
-  "outputDirectory": "front-end/dist",
+  "services": {
+    "front-end": {
+      "root": "front-end",
+      "framework": "vite"
+    },
+    "quiz-backend": {
+      "root": "quiz-backend",
+      "framework": "express"
+    }
+  },
   "rewrites": [
     {
+      "source": "/v1/(.*)",
+      "destination": { "service": "quiz-backend" }
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": { "service": "quiz-backend" }
+    },
+    {
+      "source": "/storage/(.*)",
+      "destination": { "service": "quiz-backend" }
+    },
+    {
+      "source": "/uploads/(.*)",
+      "destination": { "service": "quiz-backend" }
+    },
+    {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": { "service": "front-end" }
     }
   ]
 }

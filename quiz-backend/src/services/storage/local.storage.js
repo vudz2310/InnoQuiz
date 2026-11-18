@@ -4,14 +4,20 @@ import { existsSync } from "fs";
 
 export class LocalStorageDriver {
   constructor(baseDir = "storage", publicUrlPrefix = "/storage") {
-    this.baseDir = path.resolve(baseDir);
+    this.baseDir = process.env.VERCEL
+      ? path.join("/tmp", baseDir)
+      : path.resolve(baseDir);
     this.publicUrlPrefix = publicUrlPrefix;
     this.ensureBaseDir();
   }
 
   async ensureBaseDir() {
-    if (!existsSync(this.baseDir)) {
-      await fs.mkdir(this.baseDir, { recursive: true });
+    try {
+      if (!existsSync(this.baseDir)) {
+        await fs.mkdir(this.baseDir, { recursive: true });
+      }
+    } catch (err) {
+      console.warn("[LocalStorageDriver] Unable to create baseDir:", err.message);
     }
   }
 

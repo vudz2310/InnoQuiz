@@ -6,9 +6,15 @@ import ApiError from "../utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
 
 // Đảm bảo thư mục uploads tồn tại (legacy)
-const uploadsDir = path.join(process.cwd(), "uploads");
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+const uploadsDir = process.env.VERCEL
+  ? path.join("/tmp", "uploads")
+  : path.join(process.cwd(), "uploads");
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+} catch (err) {
+  console.warn("[UploadMiddleware] Unable to create uploadsDir:", err.message);
 }
 
 // Cấu hình lưu trữ file trên ổ đĩa (legacy)

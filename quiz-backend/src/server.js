@@ -24,17 +24,26 @@ app.use(securityCheckMiddleware);
 app.use(antiScrapingMiddleware);
 
 // Đảm bảo thư mục storage & uploads tồn tại và phục vụ file tĩnh
-const storageDir = path.join(process.cwd(), 'storage');
-if (!fs.existsSync(storageDir)) {
-  fs.mkdirSync(storageDir, { recursive: true });
+const baseStorageRoot = process.env.VERCEL ? '/tmp' : process.cwd();
+const storageDir = path.join(baseStorageRoot, 'storage');
+try {
+  if (!fs.existsSync(storageDir)) {
+    fs.mkdirSync(storageDir, { recursive: true });
+  }
+} catch (err) {
+  console.warn('[Storage] Unable to create storageDir:', err.message);
 }
 app.use('/storage', express.static(storageDir));
 app.use('/quizzes', express.static(path.join(storageDir, 'quizzes')));
 app.use(express.static(storageDir));
 
-const uploadsDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+const uploadsDir = path.join(baseStorageRoot, 'uploads');
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+} catch (err) {
+  console.warn('[Uploads] Unable to create uploadsDir:', err.message);
 }
 app.use('/uploads', express.static(uploadsDir));
 
@@ -69,6 +78,10 @@ if (env.BUILD_MODE === "development") {
 app.use(['/v1', '/api/v1'], indexRouter)
 app.use(errorHandlingMiddleware)
 
-app.listen(env.PORT, () => {
-  console.log('Server lắng nghe ở cổng:', env.PORT)
-})
+if (!process.env.VERCEL) {
+  app.listen(env.PORT, () => {
+    console.log('Server lắng nghe ở cổng:', env.PORT)
+  })
+}
+
+export default app
