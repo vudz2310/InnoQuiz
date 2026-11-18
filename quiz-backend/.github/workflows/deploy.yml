@@ -1,0 +1,36 @@
+name: Deploy Backend to VPS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Backend via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          command_timeout: 30m      # <-- TĂNG THỜI GIAN CHỜ LÊN 30 PHÚT
+          timeout: 60s
+          script_stop: true
+          script: |
+            echo "==> 1. Kéo code mới nhất..."
+            cd /var/www/eduQuiz/quiz-backend
+            git fetch origin master
+            git reset --hard origin/master
+
+            echo "==> 2. Rebuild container Backend..."
+            cd /var/www/eduQuiz
+            docker compose up -d --build backend
+
+            echo "==> 3. Dọn dẹp images rác..."
+            docker image prune -f
+
+            echo "==> Deploy Backend thành công!"

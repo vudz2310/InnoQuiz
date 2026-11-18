@@ -1,0 +1,20 @@
+model UserSession {
+  id               String    @id @default(uuid())
+  userId           String
+  refreshTokenHash String    @unique
+  ipAddress        String
+  userAgent        String?
+  deviceName       String?
+  browserName      String?
+  osName           String?
+  isCurrent        Boolean   @default(false)
+  lastActiveAt     DateTime  @default(now())
+  expiresAt        DateTime
+  createdAt        DateTime  @default(now())
+
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([lastActiveAt])
+}

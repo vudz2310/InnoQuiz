@@ -1,0 +1,32 @@
+enum QuestionType {
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+  SHORT_ANSWER
+}
+
+model Question {
+  id          String  @id @default(uuid())
+  content     String
+  explanation String?
+
+  quizId String
+  quiz   Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  sectionId String?
+  section   QuizSection? @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+
+  type   QuestionType @default(MULTIPLE_CHOICE)
+  points Float        @default(1)
+  order  Int
+
+  answers Answer[]
+  media   QuestionMedia[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  userAnswers UserAnswer[]
+
+  @@index([quizId])
+  @@index([sectionId])
+}

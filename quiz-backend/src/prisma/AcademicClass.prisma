@@ -1,0 +1,20 @@
+enum AcademicClassStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model AcademicClass {
+  id                String              @id @default(uuid())
+  code              String              @unique
+  name              String
+  majorId           String
+  cohort            String?
+  status            AcademicClassStatus @default(ACTIVE)
+  allowRegistration Boolean             @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  major    Major  @relation(fields: [majorId], references: [id], onDelete: Restrict)
+  students User[]
+}

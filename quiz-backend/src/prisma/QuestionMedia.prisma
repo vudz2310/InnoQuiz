@@ -1,0 +1,25 @@
+enum QuestionMediaType {
+  IMAGE
+  AUDIO
+  VIDEO
+}
+
+model QuestionMedia {
+  id           String            @id @default(uuid())
+  questionId   String
+  type         QuestionMediaType @default(IMAGE)
+  originalName String?
+  storageKey   String
+  mimeType     String
+  size         Int
+  width        Int?
+  height       Int?
+  order        Int               @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}

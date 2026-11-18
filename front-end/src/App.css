@@ -1,0 +1,14 @@
+/* App.css - Clean minimal resets */
+#root {
+  width: 100%;
+  min-h: 100vh;
+}
+/* Dành cho Chrome, Safari và Edge */
+.element::-webkit-scrollbar {
+  display: none; 
+}
+
+/* Dành cho Firefox */
+.element {
+  scrollbar-width: none; 
+}

@@ -1,0 +1,49 @@
+enum SecurityEventType {
+  REGISTER
+  LOGIN_SUCCESS
+  LOGIN_FAILED
+  LOGOUT
+  OTP_SENT
+  OTP_VERIFIED
+  OTP_FAILED
+  PASSWORD_CHANGED
+  SESSION_REVOKED
+  RATE_LIMIT_EXCEEDED
+  SUSPICIOUS_SCRAPING_DETECTED
+  ACCESS_DENIED
+  ADMIN_ACTION
+}
+
+enum SecurityRiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model SecurityEvent {
+  id          String            @id @default(uuid())
+  userId      String?
+  userEmail   String?
+  eventType   SecurityEventType
+  ipAddress   String
+  ipHash      String
+  userAgent   String?
+  deviceInfo  String?
+  endpoint    String?
+  httpMethod  String?
+  httpStatus  Int?
+  riskLevel   SecurityRiskLevel @default(LOW)
+  riskScore   Int               @default(0)
+  details     Json?
+  createdAt   DateTime          @default(now())
+
+  user        User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([eventType])
+  @@index([userId])
+  @@index([ipHash])
+  @@index([riskLevel])
+  @@index([riskScore])
+}

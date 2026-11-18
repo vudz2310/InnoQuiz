@@ -1,0 +1,45 @@
+enum QuizStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum QuizMajorScope {
+  ALL_MAJORS
+  SPECIFIC_MAJORS
+}
+
+model Quiz {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+
+  coverKey String?
+  coverUrl String?
+
+  authorId String
+
+  author User @relation(fields: [authorId], references: [id])
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  status QuizStatus @default(DRAFT)
+
+  majorScope QuizMajorScope @default(ALL_MAJORS)
+  quizMajors QuizMajor[]
+
+  timeLimit   Int?
+  maxAttempts Int?
+
+  startAt DateTime?
+  dueAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  questions Question[]
+  sections  QuizSection[]
+  attempts  QuizAttempt[]
+  tags      QuizTag[]
+}

@@ -1,0 +1,21 @@
+enum MajorStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Major {
+  id                String      @id @default(uuid())
+  code              String      @unique
+  name              String
+  description       String?
+  status            MajorStatus @default(ACTIVE)
+  allowRegistration Boolean     @default(true)
+  displayOrder      Int         @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  classes    AcademicClass[]
+  students   User[]
+  quizMajors QuizMajor[]
+}

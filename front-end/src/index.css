@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-light: #eef2ff;
+  --color-secondary: #7c3aed;
+  --color-secondary-light: #f5f3ff;
+  --color-accent: #06b6d4;
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* Subtle shadow tokens */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-card:
+    0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  --shadow-hover:
+    0 4px 12px -2px rgba(79, 70, 229, 0.08),
+    0 2px 4px -2px rgba(15, 23, 42, 0.04);
+}
+
+.dark {
+  --color-bg: #090d1a;
+  --color-surface: #111827;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-border: #1e293b;
+  --color-primary-light: #1e1b4b;
+  --color-secondary-light: #2e1065;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+@theme inline {
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-light: #eef2ff;
+  --color-secondary: #7c3aed;
+  --color-secondary-light: #f5f3ff;
+  --color-accent: #06b6d4;
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-heading: #0f172a;
+  --color-body: #475569;
+  --color-[#4F46E5]: #4f46e5;
+}
+
+/* Base Layout Utilities */
+@utility base-container {
+  @apply max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Common Card Utility */
+@utility card {
+  @apply bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-slate-800 text-[#0F172A] dark:text-slate-100 rounded-2xl p-6 shadow-xs;
+}
+
+@utility card-hover {
+  @apply bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-slate-800 hover:border-[#C7D2FE] dark:hover:border-indigo-500 rounded-2xl p-6 shadow-xs transition-all duration-200 cursor-pointer;
+}
+
+/* Button Utilities */
+@utility btn-primary {
+  @apply bg-[#4F46E5] hover:bg-[#4338CA] text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-xs transition-all duration-200 cursor-pointer inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+@utility btn-secondary {
+  @apply bg-[#EEF2FF] dark:bg-indigo-950/60 hover:bg-[#E0E7FF] dark:hover:bg-indigo-900/60 text-[#4F46E5] dark:text-indigo-300 font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+@utility btn-outline {
+  @apply bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-slate-800 hover:bg-[#F8FAFC] dark:hover:bg-slate-800 text-[#334155] dark:text-slate-200 font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+@utility btn-danger {
+  @apply bg-[#EF4444] hover:bg-[#DC2626] text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-xs transition-all duration-200 cursor-pointer inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+@utility btn-sm-primary {
+  @apply bg-[#4F46E5] hover:bg-[#4338CA] text-white font-semibold text-xs px-4 py-2 rounded-lg transition-all duration-200 cursor-pointer whitespace-nowrap inline-flex items-center justify-center gap-1.5;
+}
+
+/* Form Utilities */
+@utility form-card {
+  @apply bg-white dark:bg-[#111827] rounded-3xl p-6 sm:p-8 md:p-10 border border-[#E2E8F0] dark:border-slate-800 shadow-xs;
+}
+
+@utility form-group {
+  @apply flex flex-col space-y-1.5;
+}
+
+@utility form-label {
+  @apply block text-sm font-semibold text-[#0F172A] dark:text-slate-200;
+}
+
+@utility form-input {
+  @apply w-full bg-white dark:bg-[#111827] rounded-xl border border-[#E2E8F0] dark:border-slate-800 px-4 py-2.5 text-sm text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:placeholder:text-slate-500 transition-all outline-none focus:border-[#4F46E5] dark:focus:border-indigo-500 focus:ring-2 focus:ring-[#4F46E5]/10 dark:focus:ring-indigo-950/40 disabled:bg-[#F1F5F9] dark:disabled:bg-slate-800/70 disabled:cursor-not-allowed;
+}
+
+@utility form-select {
+  @apply form-input pr-10 appearance-none cursor-pointer;
+}
+
+@utility form-textarea {
+  @apply form-input min-h-[100px] resize-y;
+}
+
+/* Section Utilities */
+@utility section-card {
+  @apply bg-white dark:bg-[#111827] rounded-2xl p-6 sm:p-8 shadow-xs border border-[#E2E8F0] dark:border-slate-800;
+}
+
+@utility section-title {
+  @apply text-2xl sm:text-3xl font-bold text-[#0F172A] dark:text-white tracking-tight mb-2;
+}
+
+@utility section-desc {
+  @apply text-[#475569] dark:text-slate-400 text-sm sm:text-base mb-6 leading-relaxed;
+}
+
+@utility card-item {
+  @apply bg-white dark:bg-[#111827] rounded-2xl p-5 sm:p-6 border border-[#E2E8F0] dark:border-slate-800 hover:border-[#C7D2FE] dark:hover:border-indigo-500 transition-all duration-200 cursor-pointer shadow-xs;
+}
+
+/* Badge Utilities */
+@utility badge-primary {
+  @apply bg-[#EEF2FF] dark:bg-indigo-950/60 text-[#4F46E5] dark:text-indigo-300 text-xs font-semibold px-2.5 py-1 rounded-full inline-flex items-center gap-1;
+}
+
+@utility badge-success {
+  @apply bg-[#ECFDF5] dark:bg-emerald-950/60 text-[#047857] dark:text-emerald-300 text-xs font-semibold px-2.5 py-1 rounded-full inline-flex items-center gap-1;
+}
+
+@utility badge-warning {
+  @apply bg-[#FFFBEB] dark:bg-amber-950/60 text-[#B45309] dark:text-amber-300 text-xs font-semibold px-2.5 py-1 rounded-full inline-flex items-center gap-1;
+}
+
+@utility badge-danger {
+  @apply bg-[#FEF2F2] dark:bg-red-950/60 text-[#DC2626] dark:text-red-300 text-xs font-semibold px-2.5 py-1 rounded-full inline-flex items-center gap-1;
+}
+
+@utility badge-neutral {
+  @apply bg-[#F1F5F9] dark:bg-slate-800 text-[#475569] dark:text-slate-300 text-xs font-semibold px-2.5 py-1 rounded-full inline-flex items-center gap-1;
+}
+
+/* Legacy Soft/Solid Badge Aliases mapped to Design System */
+@utility badge-soft {
+  @apply badge-primary;
+}
+
+@utility badge-solid {
+  @apply bg-[#4F46E5] text-white text-xs font-semibold px-2.5 py-1 rounded-full inline-flex items-center gap-1;
+}
+
+/* Tab Navigation Utilities */
+@utility tab-btn {
+  @apply rounded-xl font-semibold text-sm px-5 py-2.5 transition-all duration-200 cursor-pointer select-none bg-white dark:bg-[#111827] text-[#475569] dark:text-slate-300 border border-[#E2E8F0] dark:border-slate-800 hover:text-[#4F46E5] dark:hover:text-indigo-400 hover:bg-[#F8FAFC] dark:hover:bg-slate-800;
+}
+
+@utility tab-btn-active {
+  @apply bg-[#EEF2FF] dark:bg-indigo-950/80 text-[#4F46E5] dark:text-indigo-300 border-[#4F46E5] dark:border-indigo-500 font-bold shadow-xs;
+}
+
+/* Icon Box Utility */
+@utility contact-icon-box {
+  @apply w-11 h-11 shrink-0 rounded-xl bg-[#EEF2FF] dark:bg-indigo-950/60 border border-[#C7D2FE]/60 dark:border-indigo-800/40 flex items-center justify-center text-[#4F46E5] dark:text-indigo-300;
+}
+
+@keyframes toastProgress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+.animate-toast-progress {
+  animation: toastProgress linear forwards;
+}
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+

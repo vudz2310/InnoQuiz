@@ -1,0 +1,31 @@
+import express from "express";
+import { authRoute } from "./auth.route.js";
+import { profileRoute } from "./profile.route.js";
+import { userRoute } from "./user.route.js";
+import { categoryRoute } from "./category.route.js";
+import { quizRoute } from "./quiz.route.js";
+import { questionRoute } from "./question.route.js";
+import { uploadRoute } from "./upload.route.js";
+import { attemptRoute } from "./attempt.route.js";
+import { examSessionRoute } from "./examSession.route.js";
+import { majorRoute } from "./major.route.js";
+import { adminRoute } from "./admin.route.js";
+import { teacherRoute } from "./teacher.route.js";
+import { securityRoute } from "./security.route.js";
+
+const Router = express.Router();
+Router.use("/auth", authRoute);
+Router.use("/profile", profileRoute);
+Router.use("/users", userRoute);
+Router.use("/categories", categoryRoute);
+Router.use("/quizzes", quizRoute);
+Router.use("/questions", questionRoute);
+Router.use("/upload", uploadRoute);
+Router.use("/attempts", attemptRoute);
+Router.use("/exam-sessions", examSessionRoute);
+Router.use("/majors", majorRoute);
+Router.use("/admin/security", securityRoute);
+Router.use("/admin", adminRoute);
+Router.use("/teacher", teacherRoute);
+
+export const indexRouter = Router;

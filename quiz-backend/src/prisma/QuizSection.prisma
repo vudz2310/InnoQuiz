@@ -1,0 +1,16 @@
+model QuizSection {
+  id          String  @id @default(uuid())
+  quizId      String
+  title       String
+  description String?
+  order       Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  quiz      Quiz       @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  questions Question[]
+
+  @@unique([quizId, order])
+  @@index([quizId])
+}

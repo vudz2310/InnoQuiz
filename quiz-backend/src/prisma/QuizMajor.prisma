@@ -1,0 +1,11 @@
+model QuizMajor {
+  id        String   @id @default(uuid())
+  quizId    String
+  majorId   String
+  createdAt DateTime @default(now())
+
+  quiz  Quiz  @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  major Major @relation(fields: [majorId], references: [id], onDelete: Cascade)
+
+  @@unique([quizId, majorId])
+}

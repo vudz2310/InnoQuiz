@@ -1,0 +1,36 @@
+enum UserRole {
+  USER
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String?
+  studentCode   String?  @unique
+  avatar        String?
+  avatarKey     String?
+  avatarUrl     String?
+  password      String
+  role          UserRole @default(STUDENT)
+  emailVerified Boolean  @default(false)
+  status        String   @default("ACTIVE")
+
+  majorId       String?
+  major         Major?   @relation(fields: [majorId], references: [id], onDelete: SetNull)
+
+  classId       String?
+  academicClass AcademicClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  quizzes           Quiz[]
+  attempts          QuizAttempt[]
+  emailVerification EmailVerification?
+  securityEvents    SecurityEvent[]
+  sessions          UserSession[]
+  securityAlerts    SecurityAlert[]
+}

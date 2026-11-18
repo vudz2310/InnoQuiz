@@ -1,0 +1,22 @@
+enum ImportStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+model QuizImport {
+  id            String       @id @default(uuid())
+  userId        String
+  originalName  String
+  sourceFileKey String
+  mimeType      String
+  fileSize      Int
+  status        ImportStatus @default(PENDING)
+  extractedData Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
