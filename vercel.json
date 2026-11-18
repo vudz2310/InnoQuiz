@@ -1,15 +1,12 @@
-
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "services": {
-    "front-end": {
-      "root": "front-end",
-      "framework": "vite"
-    },
-    "quiz-backend": {
-      "root": "quiz-backend",
-      "framework": "express"
+  "installCommand": "cd front-end && npm install",
+  "buildCommand": "cd front-end && npm run build",
+  "outputDirectory": "front-end/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  },
-  "rewrites": []
+  ]
 }
