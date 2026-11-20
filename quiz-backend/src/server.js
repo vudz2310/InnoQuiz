@@ -9,6 +9,7 @@ import { swaggerSpec } from './config/swagger.js'
 import { securityCheckMiddleware, antiScrapingMiddleware } from './middlewares/rateLimiter.js'
 import path from 'path'
 import fs from 'fs'
+import service from '../service.mjs'
 
 const app = express();
 
@@ -79,8 +80,8 @@ app.use(['/v1', '/api/v1'], indexRouter)
 app.use(errorHandlingMiddleware)
 
 if (!process.env.VERCEL) {
-  app.listen(env.PORT, () => {
-    console.log('Server lắng nghe ở cổng:', env.PORT)
+  app.listen(service.port(), () => {
+    console.log('Server lắng nghe ở cổng:', service.port())
   })
 }
 
