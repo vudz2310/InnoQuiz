@@ -6,9 +6,7 @@
   "scripts": {
     "dev": "cross-env BUILD_MODE=development nodemon src/server.js",
     "start": "cross-env BUILD_MODE=production node src/server.js",
-    "build": "prisma generate",
-    "db:generate": "prisma generate",
-    "postinstall": "prisma generate",
+    "build": "node --check src/server.js",
     "db:migrate": "prisma migrate dev"
   },
   "keywords": [],
@@ -35,7 +33,6 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14",
-    "prisma": "^7.9.1"
+    "nodemon": "^3.1.14"
   }
 }

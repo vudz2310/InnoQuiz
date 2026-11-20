@@ -1,13 +1,6 @@
-import { env } from "./environment.js";
-import pg from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
-import * as PrismaAll from "@prisma/client";
+import service from "../../service.mjs";
 
-// Establish connection pool using node-postgres
-const pool = new pg.Pool({
-  connectionString: env.DATABASE_URL || process.env.DATABASE_URL,
-});
-const adapter = new PrismaPg(pool);
+// The Prisma ORM 8 client arrives through the app's service declaration.
+const { db } = service.load();
 
-// Instantiate client with the driver adapter
-export const prisma = new PrismaAll.PrismaClient({ adapter });
+export const prisma = db.client;
